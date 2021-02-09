@@ -1,0 +1,102 @@
+
+ALTER TABLE PATIENT AUTO_INCREMENT = 10001;
+
+INSERT INTO `patient`(`firstName`, `surName`, `contactNumber`, `address`, `overduePaymentSpecify`, `treatmentIDHistory`) 
+
+VALUES 
+
+('Joe', 'Adams', '+3538485739', '24 Oak Drive, Dublin 6', 'Up to date', 'Previous treatments: 00100, 00101'),
+
+('Leanne', 'Flynn', '+3534928475', '21 Fairview Close, Dublin 7', 'Late cancel for appointment 50005, €10 owed', 'Previous treatments: 00101, 00104'),
+
+('Sam', 'Kelly', '+3534356478', '29 Lakeshore Drive, Dublin 7', 'Up to date', 'Previous treatments: 00101, 00106'), 
+
+('Deirdre', 'Murray', '+3531234568', '12 Chesnut Close, Dublin 8', 'Up to Date', 'Previous Treatments: 00107, 00105'),
+
+('Sarah', 'Reilly', '+3538695845', '34 Cherry Drive, Dublin 7', 'Nonpayments on appointment 50010, 50011, total due: €205 - *Do no accept further appointments*', 'Previous treatments: 00101, 00102, 00103');
+
+
+ALTER TABLE appoinmentdiary AUTO_INCREMENT = 50001
+
+INSERT INTO `appoinmentdiary`(`patient_ID`, `appointmentDate+Time`, `follow_upNeeded`, `treatment(s)`, `cancellation`, `lateFee`, `visitCardFiled`, `paymentReceived`) VALUES 
+
+(10001, '2019-11-24 10:05:00', 'Yes', '00100', 'No', 'N/A', 'Yes', 'Yes'),
+
+(10001, '2019-12-01 11:00:00', 'No', '00101', 'No', 'N/A', 'Yes', 'Yes'),
+
+(10002, '2019-12-02 09:00:00', 'Yes', '00101', 'No', 'N/A', 'Yes', 'Yes'),
+
+(10002, '2019-12-08 09:30:00', 'Yes', '00104', 'No', 'N/A', 'Yes', 'Yes'),
+
+(10002, '2019-12-18 10:00:05', 'No', 'None', 'Yes', '10', 'N/A', 'No'),
+
+(10003, '2019-12-19 14:00:00', 'Yes', '00101', 'No', 'N/A','Yes', 'Yes'),
+
+(10003, '2019-12-20 09:00:00', 'No', '00106', 'No', 'N/A', 'Yes', 'Yes'),
+
+(10004, '2020-01-15 10:00:00', 'No', '00107, 00105', 'No', 'N/A', 'Yes', 'Yes'),
+
+(10005, '2020-01-16 09:00:00', 'Yes', '00101', 'No', 'N/A', 'Yes', 'Yes'),
+
+(10005, '2020-01-27 09:35:00', 'Yes', '00102', 'No', 'N/A', 'No', 'No'),
+
+(10005, '2020-01-29 09:00:00', 'Yes', '00103', 'No', 'N/A', 'No', 'No');
+
+
+ALTER TABLE treatmentAndFees AUTO_INCREMENT = 00100;
+
+INSERT INTO `treatmentandFees`(`treatmentType`, `treatmentFee`, `specialistRequired`) VALUES
+
+('Composite filling', 70, 'No' ),
+('Teeth Cleaning', 35, 'No' ),
+('Mercury Amalgam Filling', 55, 'No' ),
+('Standard tooth removal', 150, 'No' ),
+('Molar removal', 190, 'No' ),
+('Root Canal', 330, 'No' ),
+('Braces', 1100, 'Yes'),
+('Head X-Ray', 35, 'No' ),
+('Late Cancellation', '10', 'No');
+
+
+ALTER TABLE bill AUTO_INCREMENT = 20001;
+INSERT INTO `bill`(`treatmentTypeID`, `patient_ID`, `summary`, `amountDue`, `dueBy`) VALUES
+
+
+(00100, 10001, 'Composite filling', '70', '2019-12-01 00:00:00'),
+(00101, 10001, 'Teeth Cleaning', '35', '2019-12-08 00:00:00'),
+
+(00101, 10002, 'Teeth Cleaning', '35', '2019-12-09 00:00:00'),
+(00104, 10002, 'Molar Removal', '190', '2019-12-15 00:00:00'),
+(00108, 10002, 'Late Cancellation Fee 10 euro standard charge', 10, '2019-12-25'),
+
+(00101, 10003, 'Teeth Cleaning', 35, '2019-12-26 00:00:00'),
+(00106, 10003, 'Braces - Required Specialist', 1100, '2020-01-21 00:00:00'),
+
+
+(00107, 10004, 'Head X-Ray', 35, '2020-01-22 00:00:00'),
+(00105, 10004, 'Root Canal', 330, '2020-01-22 00:00:00'),
+
+(00101, 10005, 'Teeth Cleaning', 35, '2020-01-23 00:00:00'),
+(00102, 10005, 'Mercury Amalgam Filling', 55, '2020-03-02 00:00:00'),
+(00103, 10005, 'Standard Tooth Removal', 150, '2020-02-05 00:00:00')
+
+ALTER table payment AUTO_INCREMENT = 30001
+
+INSERT INTO `payment`(`bill_ID`, `amount`, `methodPayed`, `instalment`, `paymentDate`) VALUES 
+
+(20001, 70, 'Card', 'Payed in full', '2019-11-26 13:23:21'),
+(20002, 30, 'Card', 'Payed in full', '2019-12-04 12:03:34'),
+(20003, 35, 'Cash', 'Payed in full', '2019-12-02 12:03:34'),
+(20004, 30, 'Cash', 'Payed in full', '2019-12-12 12:03:34'),
+
+(20006, 35, 'Card', 'Payed in full', '2019-12-04 12:03:34'),
+(20007, 400, 'Card', 'Instalment 1 of 3 for treatment 106 (braces) Total due: See bill_ID ', '2020-01-04 16:03:34'),
+(20007, 500, 'Card', 'Instalment 2 of 3 for treatment 106 (braces) Total due: See bill_ID ', '2020-01-12 17:09:01'),
+(20007, 300, 'Card', 'Instalment 3 of 3 for treatment 106 (braces) Total due: See bill_ID ', '2020-01-15 14:03:57'),
+
+(20008, 35, 'Card', 'Payed in full', '2020-01-20 10:43:34'),
+(20009, 330, 'Card', 'Payed in full', '2020-01-20 10:49:23'),
+
+(20010, 35, 'Card', 'Payed in full', '2020-01-16 10:49:23')
+
+INSERT INTO `specialist`(`specialistID`, `specialistName`, `treatmentTypeID`, `referredBy`, `referalReason`) VALUES (60001, 'Dr.Fabio Pizarro', 'Dr Mary Mulcahy', 'Braces expert for treatment 106')
